@@ -5,7 +5,7 @@ resource "aws_lb" "web_lb" {
   load_balancer_type = "application"
 
   access_logs {
-    bucket  = aws_s3_bucket.logs-coalfire-demo213-bucket.bucket # Reference your S3 logs bucket
+    bucket  = aws_s3_bucket.logs2131_bucket.bucket # Reference your S3 logs bucket
     enabled = true
     prefix  = "alb-logs"
   }
@@ -14,7 +14,7 @@ resource "aws_lb" "web_lb" {
     aws_subnet.Sub1.id,
     aws_subnet.Sub2.id
   ]
-  security_groups            = [aws_security_group.alb_sg.id] # I attached the ALB security group
+  security_groups            = [aws_security_group.alb-security-group.id] # I attached the ALB security group
   enable_deletion_protection = false
 }
 
@@ -22,7 +22,7 @@ resource "aws_lb" "web_lb" {
 resource "aws_lb_target_group" "web_tg" {
   port     = 443
   protocol = "HTTPS"
-  vpc_id   = aws_vpc.main.id
+  vpc_id   = aws_vpc.vpc.id
 }
 
 # I defined a Listener for the ALB
