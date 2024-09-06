@@ -40,7 +40,3 @@ variable "ssh-location" {
   description = "IP to ssh into EC2 instance"
   type        = string
 }
-
-variable "key_name" {
-  description = "coalfire"
-}
