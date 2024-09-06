@@ -40,3 +40,13 @@ variable "ssh-location" {
   description = "IP to ssh into EC2 instance"
   type        = string
 }
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  default     = "t2.micro"
+}
+
+variable "redhat_ami" {
+  description = "AMI for the redhat instance"
+  default     = "ami-0583d8c7a9c35822c"
+}
