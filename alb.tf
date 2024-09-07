@@ -4,11 +4,6 @@ resource "aws_lb" "web_lb" {
   internal           = false
   load_balancer_type = "application"
 
-  access_logs {
-    bucket  = aws_s3_bucket.logs2131_bucket.bucket # Reference your S3 logs bucket
-    enabled = true
-    prefix  = "alb-logs"
-  }
 
   subnets = [
     aws_subnet.Sub1.id,

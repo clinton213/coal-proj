@@ -12,18 +12,20 @@ resource "aws_instance" "RHEL_ec2" {
 
   user_data = <<-EOF
               #!/bin/bash
-              yum update -y
-              yum install -y httpd
-              service httpd start
-              chkconfig httpd on
-              curl "https://d1uj6qtbmh3dt5.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              sudo yum update -y
+              sudo yum install -y httpd
+              sudo yum install vim -y
+              sudo yum install -y unzip
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
               unzip awscliv2.zip
-              sudo ./aws/install
-              rm awscliv2.zip
+              sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+              sudo systemctl start httpd
+              sudo systemctl enable httpd
               EOF
 
+  user_data_replace_on_change = true
   tags = {
-    Name = "RHEL-coalfire_ec2"
+    Name = "rhat-coalfire_ec2"
   }
 }
 
