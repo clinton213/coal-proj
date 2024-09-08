@@ -9,15 +9,24 @@ resource "aws_lb" "web_lb" {
     aws_subnet.Sub1.id,
     aws_subnet.Sub2.id
   ]
-  security_groups            = [aws_security_group.alb-security-group.id] # I attached the ALB security group
+  security_groups            = [aws_security_group.alb-security-group.id]
   enable_deletion_protection = false
 }
 
 # I defined a target group for the ASG
 resource "aws_lb_target_group" "web_tg" {
-  port     = 443
-  protocol = "HTTPS"
+  port     = 80
+  protocol = "HTTP"
   vpc_id   = aws_vpc.vpc.id
+  health_check {
+    path                = "/health"
+    protocol            = "HTTP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
+    matcher             = "200"
+  }
 }
 
 # I defined a Listener for the ALB

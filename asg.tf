@@ -21,6 +21,7 @@ resource "aws_launch_template" "web_launch_template" {
               curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
               unzip awscliv2.zip
               sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+              sudo echo "Healthy" > /var/www/html/health
               sudo systemctl start httpd
               sudo systemctl enable httpd
               EOF

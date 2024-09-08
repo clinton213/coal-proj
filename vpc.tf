@@ -2,6 +2,7 @@
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc-cidr
   instance_tenancy     = "default"
+  enable_dns_support   = true
   enable_dns_hostnames = true
 
   tags = {
@@ -112,8 +113,9 @@ resource "aws_eip" "eip-for-nat-gateway-2" {
 
 # Create Nat Gateway 1 in Public Subnet 1
 resource "aws_nat_gateway" "nat-gateway-1" {
-  allocation_id = aws_eip.eip-for-nat-gateway-1.id
-  subnet_id     = aws_subnet.Sub1.id
+  allocation_id     = aws_eip.eip-for-nat-gateway-1.id
+  subnet_id         = aws_subnet.Sub1.id
+  connectivity_type = "public"
 
   tags = {
     Name = "Nat Gateway Sub1 - Public"
@@ -122,8 +124,9 @@ resource "aws_nat_gateway" "nat-gateway-1" {
 
 # Create Nat Gateway 2 in Public Subnet 2
 resource "aws_nat_gateway" "nat-gateway-2" {
-  allocation_id = aws_eip.eip-for-nat-gateway-2.id
-  subnet_id     = aws_subnet.Sub2.id
+  allocation_id     = aws_eip.eip-for-nat-gateway-2.id
+  subnet_id         = aws_subnet.Sub2.id
+  connectivity_type = "public"
 
   tags = {
     Name = "Nat Gateway Sub2 - Public"
